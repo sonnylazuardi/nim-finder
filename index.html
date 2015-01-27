@@ -94,13 +94,15 @@
                 if (!$scope.loading) {
                     $result = angular.element('.result');
                     $result.hide().removeClass('animated');
-                    $scope.results = _.uniq(_.filter($scope.data, function(item) {
+                    $scope.results = _.sortBy(_.uniq(_.filter($scope.data, function(item) {
                         if ($scope.isNumber($scope.nim)) { //nim
                             return $scope.contains(item.nim, $scope.nim);
                         } else { //nama
                             return $scope.contains(item.nama, $scope.nim);
                         }
                     }), function(item, key, a) { 
+                        return item.nim;
+                    }), function(item) {
                         return item.nim;
                     });
                     $timeout(function() {
