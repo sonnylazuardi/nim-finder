@@ -33,14 +33,16 @@
                         <div ng-repeat="result in results">
                             <div class="ion">
                                 <div class="bottom">                               
-                                    <div ng-show="result.nim">
-                                        <h3>{{result.nama}}</h3>
-                                        <h4>{{result.nim}}</h4>
-                                        <h4 ng-show="result.angkatan">Angkatan {{result.angkatan}}</h4>
-                                    </div>
-                                    <div ng-show="!result.nim">
-                                        <h3>Not Found</h3>
-                                    </div>
+                                    <h3>{{result.nama}}</h3>
+                                    <h4>{{result.nim}}</h4>
+                                    <h4 ng-show="result.angkatan">Angkatan {{result.angkatan}}</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div ng-show="results.length == 0">
+                            <div class="ion">
+                                <div class="bottom">        
+                                    <h3>Not Found</h3>
                                 </div>
                             </div>
                         </div>
