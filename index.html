@@ -30,17 +30,19 @@
 
 
                     <div class="result">
-                        <div class="ion">
-                          <div class="bottom">
-                            <div ng-show="result.nim">
-                                <h3>{{result.nama}}</h3>
-                                <h4>{{result.nim}}</h4>
-                                <h4 ng-show="result.angkatan">Angkatan {{result.angkatan}}</h4>
+                        <div ng-repeat="result in results">
+                            <div class="ion">
+                                <div class="bottom">                               
+                                    <div ng-show="result.nim">
+                                        <h3>{{result.nama}}</h3>
+                                        <h4>{{result.nim}}</h4>
+                                        <h4 ng-show="result.angkatan">Angkatan {{result.angkatan}}</h4>
+                                    </div>
+                                    <div ng-show="!result.nim">
+                                        <h3>Not Found</h3>
+                                    </div>
+                                </div>
                             </div>
-                            <div ng-show="!result.nim">
-                                <h3>Not Found</h3>
-                              </div>
-                          </div>
                         </div>
                     </div>
                 </div>
@@ -56,7 +58,7 @@
         angular.module('NimApp', [])
 
         .controller('NimCtrl', function($scope, $timeout, $http) {
-            $scope.result = {};
+            $scope.results = {};
             $scope.years = [];
             $scope.loading = false;
             $scope.data = [];
@@ -90,12 +92,14 @@
                 if (!$scope.loading) {
                     $result = angular.element('.result');
                     $result.hide().removeClass('animated');
-                    $scope.result = _.find($scope.data, function(item) {
+                    $scope.results = _.uniq(_.filter($scope.data, function(item) {
                         if ($scope.isNumber($scope.nim)) { //nim
                             return $scope.contains(item.nim, $scope.nim);
                         } else { //nama
                             return $scope.contains(item.nama, $scope.nim);
                         }
+                    }), function(item, key, a) { 
+                        return item.nim;
                     });
                     $timeout(function() {
                         $result.show().addClass('animated bounceIn');
